@@ -16,7 +16,7 @@ training_gnb <- function(train) {
 
 pstprob <- function(x, params) {
 	cal_params <- rbind(params, x)
-	prob <- prod(unname(sapply(cal_params, function(p){ 1/sqrt(2 * pi * p[2]) * exp((p[3] - p[1])^2 / p[2]) } )))
+	prob <- prod(unname(sapply(cal_params, function(p){ 1/sqrt(2 * pi * p[2]) * exp(-(p[3] - p[1])^2 / (2 * p[2])) } )))
 	return(prob)
 }
 
