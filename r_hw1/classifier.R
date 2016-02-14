@@ -16,7 +16,7 @@ training_gnb <- function(train) {
 
 pstprob <- function(x, params) {
 	cal_params <- rbind(params, x)
-	prob <- prod(unname(sapply(cal_params, function(p){ 1/sqrt(2 * pi * p[2]) * exp(-(p[3] - p[1])^2 / (2 * p[2])) } )))
+	prob <- prod(unname(sapply(cal_params, function(p){ 1/sqrt(2 * pi * p[2]) * exp(-(p[3] - p[1]) ^ 2 / (2 * p[2])) } )))
 	return(prob)
 }
 
@@ -26,5 +26,5 @@ team2_params <- training_gnb(head(team2_won_matches, 10))
 team1_persp <- unname(apply(team1_won_matches[11:24,], 1, function(m) {pstprob(m, team1_params)}))
 team2_persp <- unname(apply(team1_won_matches[11:24,], 1, function(m) {pstprob(m, team2_params)}))
 
-team1_persp <- unname(apply(team1_won_matches[11:22,], 1, function(m) {pstprob(m, team2_params)}))
+team1_persp <- unname(apply(team1_won_matches[11:22,], 1, function(m) {pstprob(m, team1_params)}))
 team2_persp <- unname(apply(team2_won_matches[11:22,], 1, function(m) {pstprob(m, team2_params)}))
