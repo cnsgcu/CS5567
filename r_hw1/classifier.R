@@ -22,3 +22,6 @@ pstprob <- function(x, params) {
 
 team1_params <- training_gnb(head(team1_won_matches, 10))
 team2_params <- training_gnb(head(team2_won_matches, 10))
+
+pstprob(unname(unlist(team1_won_matches[11,])), team1_params)
+pstprob(unname(unlist(team1_won_matches[11,])), team2_params)
