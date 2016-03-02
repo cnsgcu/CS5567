@@ -1,4 +1,7 @@
-tennis_csv <- c('https://raw.githubusercontent.com/cnsgcu/CS5567/master/hw2/split_ausopen.csv', 'https://raw.githubusercontent.com/cnsgcu/CS5567/master/hw2/split_usopen.csv')
+tennis_csv <- c(
+  'https://raw.githubusercontent.com/cnsgcu/CS5567/master/hw2/split_ausopen.csv',
+  'https://raw.githubusercontent.com/cnsgcu/CS5567/master/hw2/split_usopen.csv'
+)
 
 tennis_players <- do.call(rbind,lapply(tennis_csv, read.csv))
 
