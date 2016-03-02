@@ -35,7 +35,7 @@ class MLPNNet:
         self._training_set = [training_data for training_data in zip(observations, targets)]
 
         hidden_layers = [observations.shape[1]] + hidden_layers + [targets.shape[1]]
-        self._weights = [np.random.uniform(-1, 1, D) for D in zip(hidden_layers[:-1], hidden_layers[1:])]
+        self._weights = [np.random.uniform(-1, 1, (D[0] + 1, D[1])) for D in zip(hidden_layers[:-1], hidden_layers[1:])]
 
 
     def _random_training_set_(self):
@@ -46,7 +46,8 @@ class MLPNNet:
         sigmas = [np.reshape(observation, (-1, 1))]
 
         for i in range(len(self._weights)):
-            sigmas.append(self._activation_(self._weights[i].T.dot(sigmas[i])))
+            bias_sigma = np.vstack(([1], sigmas[i]))
+            sigmas.append(self._activation_(self._weights[i].T.dot(bias_sigma)))
 
         return sigmas
 
@@ -55,10 +56,11 @@ class MLPNNet:
         self._deltas = [np.atleast_2d(target - self._sigmas[-1]) * self._activation_prime_(self._sigmas[-1])]
 
         for idx in range(len(self._sigmas) - 2, 0, -1):
-            self._deltas[:0] = [(self._weights[idx].dot(self._deltas[0])) * self._activation_prime_(self._sigmas[idx])]
+            bias_activation_prime = np.vstack(([1], self._activation_prime_(self._sigmas[idx])))
+            self._deltas[:0] = [((self._weights[idx].dot(self._deltas[0])) * bias_activation_prime)[1:,:]]
 
         for idx in range(len(self._weights)):
-            self._weights[idx] += self._learning_rate * self._sigmas[idx].dot(self._deltas[idx].T)
+            self._weights[idx] += self._learning_rate * np.vstack(([1], self._sigmas[idx])).dot(self._deltas[idx].T)
 
 
     def _should_stop_(self):
