@@ -60,7 +60,8 @@ class MLPNNet:
             self._deltas[:0] = [((self._weights[idx].dot(self._deltas[0])) * bias_activation_prime)[1:,:]]
 
         for idx in range(len(self._weights)):
-            self._weights[idx] += self._learning_rate * np.vstack(([1], self._sigmas[idx])).dot(self._deltas[idx].T)
+            bias_sigma = np.vstack(([1], self._sigmas[idx]))
+            self._weights[idx] += self._learning_rate * bias_sigma.dot(self._deltas[idx].T)
 
 
     def _should_stop_(self):
