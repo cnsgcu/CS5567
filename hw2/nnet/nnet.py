@@ -16,9 +16,9 @@ class MLPNNet:
             self._sigmas = self._compute_(observation)
 
             if self._should_stop_(): return
-            else:
-                self._evolve_(target)
-                self._iteration += 1
+
+            self._evolve_(target)
+            self._iteration += 1
 
 
     def describe(self):
